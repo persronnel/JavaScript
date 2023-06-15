@@ -7,7 +7,7 @@ const words = ['moto', 'lion', 'pen'];
 let search = null;
 
 Router.post('/create', (request, response) => {
-    search = words[1];
+    search = words[Math.floor(Math.random()*words.length)];
     
     return response.status(200).json({
         "msg": 'New word is set : ' + search
