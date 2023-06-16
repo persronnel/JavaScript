@@ -1,18 +1,47 @@
 const express = require('express');
+const WordModel = require('../models/word');
+const GameModel = require("../models/game");
 
 const Router = express.Router();
 
-const words = ['moto', 'lion', 'pen'];
+Router.post('/', async (request, response) => {
+    const word = await WordModel.aggregate([{
+        $sample: {size: 1}
+    }]);
 
-let search = null;
+    const game = new GameModel({
+        word: word[0]._id,
+        tries: []
+    });
 
-Router.post('/create', (request, response) => {
-    search = words[Math.floor(Math.random()*words.length)];
-    
-    return response.status(200).json({
-        "msg": 'New word is set : ' + search
-    })
+    try {
+        await game.save();
+
+        return response.status(200).json({
+            "msg": game
+        });
+    } catch (error) {
+        return response.status(500).json({
+            "error": error.message
+        });
+    }
 });
+
+Router.get('/:id', async (request, response) => {
+    const {id} = request.params;
+
+    try {
+        const game = await GameModel.findOne({_id: id});
+
+        return response.status(200).json({
+            "msg": game
+        });
+    } catch (error) {
+        return response.status(500).json({
+            "error": error.message
+        });
+    }
+})
 
 Router.post('/verif', (request, response) => {
     if (typeof request.body.word === 'undefined') {
