@@ -9,11 +9,20 @@ Router.post('/', async (request, response) => {
     const wordModel = new WordModel({ 
         name: word
     });
-    await wordModel.save();
 
-    return response.status(200).json({
-        "msg": word
-    })
+    try {
+
+        await wordModel.save();
+
+        return response.status(200).json({
+            "msg": word
+        });
+
+    } catch (error) {
+        return response.status(500).json({
+            "error": error.message
+        });
+    }
 });
 
 module.exports = Router;
