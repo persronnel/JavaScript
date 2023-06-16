@@ -5,7 +5,12 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const mongoose = require ('mongoose');
 
-mongoose.connect(process.env.MONGODB);
+try {
+    mongoose.connect(process.env.MONGODB);
+    console.log("Connected to the db");
+} catch(error) {
+    console.error('Can\'t connect to the db');
+}
 
 const GameRoutes = require('./routes/game');
 const WordRoutes = require('./routes/word');
