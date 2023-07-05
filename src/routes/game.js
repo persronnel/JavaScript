@@ -53,6 +53,8 @@ Router.post('/verif', (request, response) => {
 
     // ge the value searched by getting the game
 
+    // make the verification
+
     // send the result
 
 
