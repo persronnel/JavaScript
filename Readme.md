@@ -14,6 +14,16 @@ Where x is not good
 and 1 is good
 and 0 is not at the right position
 
+The response should be like this
+
+```javascript
+{
+    "word": "lotor",
+    "response": "10X0x"
+    "game": {}
+}
+```
+
 ## Things to do
 
 - Add vérification to the route already created
