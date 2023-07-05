@@ -18,4 +18,4 @@ and 0 is not at the right position
 
 - Add vérification to the route already created
 - Finished the verify route to send the response to the user
-- Finised the CRUD of Word
+- Finished the CRUD of Word
