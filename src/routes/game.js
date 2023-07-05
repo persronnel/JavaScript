@@ -4,6 +4,15 @@ const GameModel = require("../models/game");
 
 const Router = express.Router();
 
+const isLogged = (request, response, next) => {
+    if (request.session.user) {
+        console.log('test');
+        next();
+    } else {
+        return response.status(500).json({'msg': "not logged !"})
+    }
+}
+
 Router.post('/', async (request, response) => {
     const word = await WordModel.aggregate([{
         $sample: {size: 1}
@@ -48,7 +57,7 @@ Router.get('/:id', async (request, response) => {
     }
 })
 
-Router.post('/verif', (request, response) => {
+Router.post('/verif', isLogged, (request, response) => {
     // get the value from the user
 
     // ge the value searched by getting the game
