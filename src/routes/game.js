@@ -9,13 +9,18 @@ Router.post('/', async (request, response) => {
         $sample: {size: 1}
     }]);
 
-    const game = new GameModel({
+    let game = new GameModel({
         word: word[0]._id,
-        tries: []
+        tries: [],
+        user: request.session.user._id
     });
 
     try {
         await game.save();
+
+        game = await GameModel.find({
+            _id: game._id
+        }).populate('user').populate('word')
 
         return response.status(200).json({
             "msg": game

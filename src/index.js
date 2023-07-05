@@ -4,6 +4,7 @@ const express = require('express');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const mongoose = require ('mongoose');
+const session = require('express-session')
 
 try {
     mongoose.connect(process.env.MONGODB);
@@ -20,6 +21,15 @@ const App = express();
 App.use(helmet());
 App.use(morgan('common'));
 App.use(express.json());
+App.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { 
+        secure: false,
+        httpOnly: true
+    }
+}));
 
 App.get('/', (request, response) => {
     return response.status(200).send('<h1>It works From GET !</h1>');
