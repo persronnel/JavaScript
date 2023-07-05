@@ -49,6 +49,13 @@ Router.get('/:id', async (request, response) => {
 })
 
 Router.post('/verif', (request, response) => {
+    // get the value from the user
+
+    // ge the value searched by getting the game
+
+    // send the result
+
+
     if (typeof request.body.word === 'undefined') {
         return response.status(500).json({
             "msg": "You have to send 'word' value"
