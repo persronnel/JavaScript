@@ -22,26 +22,23 @@ Router.post('/register', async (request, response) => {
     });
 
     try {
-        
+
         await user.save();
 
         return response.status(200).json({
             "user": user
         });
-
     } catch (error) {
         return response.status(500).json({
             "error": error.message
         });
     }
-
 });
 
 Router.post('/login', async (request, response) => {
     const {email, password} = request.body;
 
     try {
-        
         let user = await UserModel.findOne({
             email,
             active: true
@@ -51,7 +48,7 @@ Router.post('/login', async (request, response) => {
             let verif = await bcrypt.compare(password, user.password);
 
             if (verif) {
-                // request.session.user = user;
+                request.session.user = user;
 
                 const accessToken = generateAccessToken(user._id)
                 const refeshToken = generateRefreshToken(user._id)
